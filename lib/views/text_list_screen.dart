@@ -53,12 +53,23 @@ class _TextListScreenState extends State<TextListScreen> {
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   onPressed: () {
                     setState(() {
-                      items.add(
-                        Item(titleController.text, descriptionController.text),
-                      );
+                      if (titleController.text.isEmpty ||
+                          descriptionController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Enter Details correctly"),
+                          ),
+                        );
+                        return;
+                      } else {
+                        items.add(
+                          Item(
+                              titleController.text, descriptionController.text),
+                        );
+                        titleController.text = '';
+                        descriptionController.text = '';
+                      }
                     });
-                    titleController.text = '';
-                    descriptionController.text = '';
                   },
                   child: const Text("Add"),
                 ),
